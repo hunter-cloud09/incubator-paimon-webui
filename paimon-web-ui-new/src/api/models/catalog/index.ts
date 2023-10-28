@@ -15,18 +15,18 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License. */
 
-.cdc-page {
-  display: flex;
-  width: 100%;
-  height: 100%;
+import httpRequest from '@/api/request'
+import type { Catalog } from './interface'
 
-  .title {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+export * from './interface'
 
-    .operation {
-      display: flex;
-    }
-  }
+// #region catalog-controller
+
+/**
+ * # Get all catalog
+ */
+export const getAllCatalogs = () => {
+  return httpRequest.get<any, Catalog[]>('/catalog/getAllCatalogs')
 }
+
+// #endregion

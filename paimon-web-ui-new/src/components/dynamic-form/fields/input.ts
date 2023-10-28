@@ -15,18 +15,15 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License. */
 
-.cdc-page {
-  display: flex;
-  width: 100%;
-  height: 100%;
+import { isFunction } from 'lodash'
+import type { IJsonItem } from '../types'
+import { NInput } from 'naive-ui'
 
-  .title {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-
-    .operation {
-      display: flex;
-    }
-  }
+export function renderInput(item: IJsonItem, fields: { [field: string]: any }) {
+  const { props, field } = isFunction(item) ? item() : item
+  return h(NInput, {
+    ...props,
+    value: fields[field],
+    onUpdateValue: (value: string) => void (fields[field] = value)
+  })
 }

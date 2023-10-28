@@ -15,18 +15,13 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License. */
 
-.cdc-page {
-  display: flex;
-  width: 100%;
-  height: 100%;
-
-  .title {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-
-    .operation {
-      display: flex;
-    }
-  }
+export interface Catalog {
+  id: number;
+  createTime: string;
+  updateTime?: string;
+  type: string;
+  name: string;
+  warehouse: string;
+  hiveUri?: string;
+  hiveConfDir?: string;
 }

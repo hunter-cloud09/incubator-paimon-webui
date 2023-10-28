@@ -15,18 +15,22 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License. */
 
-.cdc-page {
-  display: flex;
-  width: 100%;
-  height: 100%;
+import { NSwitch } from 'naive-ui'
+import { isFunction } from 'lodash'
+import type { IJsonItem } from '../types'
 
-  .title {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-
-    .operation {
-      display: flex;
-    }
-  }
+export function renderSwitch(
+  item: IJsonItem,
+  fields: { [field: string]: any }
+) {
+  const { props, field, slots = {} } = isFunction(item) ? item() : item
+  return h(
+    NSwitch,
+    {
+      ...props,
+      value: fields[field],
+      onUpdateValue: (value: string) => void (fields[field] = value)
+    },
+    { ...slots }
+  )
 }

@@ -15,18 +15,31 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License. */
 
-.cdc-page {
-  display: flex;
-  width: 100%;
-  height: 100%;
+import { NCheckbox, NCheckboxGroup, NSpace } from 'naive-ui'
+import { isFunction } from 'lodash'
+import type { IJsonItem } from '../types'
 
-  .title {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-
-    .operation {
-      display: flex;
-    }
+export function renderCheckbox(
+  item: IJsonItem,
+  fields: { [field: string]: any }
+) {
+  const { props, field, options } = isFunction(item) ? item() : item
+  if (!options) {
+    return h(NCheckbox, {
+      ...props,
+      value: fields[field],
+      onUpdateChecked: (checked: boolean) => void (fields[field] = checked)
+    })
   }
+  return h(
+    NCheckboxGroup,
+    {
+      value: fields[field],
+      onUpdateValue: (value) => void (fields[field] = value)
+    },
+    () =>
+      h(NSpace, null, () =>
+        unref(options).map((option: object) => h(NCheckbox, { ...option }))
+      )
+  )
 }
